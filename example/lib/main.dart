@@ -1,9 +1,7 @@
-import 'common/env.dart';
+import 'common/environment/env.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
-  await Env.init();
-  await Env.init();
   await Env.init();
   runApp(const MyApp());
 }
@@ -53,11 +51,11 @@ class _MyHomePageState extends State<MyHomePage> {
               const Text('Using Ma<String,String> such Env.vars[\'key\']'),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [const Text('APP_KEY:'), Text('')],
+                children: [const Text('APP_KEY:'), Text('${Env.appName}')],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [const Text('APP_KEY:'), Text('')],
+                children: [const Text('APP_KEY:'), Text('${Env.vars['APP_KEY']}')],
               ),
             ],
           ),
