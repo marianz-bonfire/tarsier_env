@@ -81,7 +81,7 @@ your_project_name/
 ```
 
 
-### 2. Generates a `env.dart` file containing static getters for environment variables from your `.env` file. Automatically imports `env.dart`. Inserts `await Env.init();` in the `main()` function of `main.dart`.
+#### 2. Generates a `env.dart` file containing static getters for environment variables from your `.env` file. Automatically imports `env.dart`. Inserts `await Env.init();` in the `main()` function of `main.dart`.
 ```sh
 dart run tarsier_env generate common/environment
 ```
