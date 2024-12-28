@@ -23,7 +23,8 @@ void main(List<String> args) async {
 
   switch (args[0]) {
     case 'generate':
-      String outputFilename = await _generateEnvFileCommand(args.skip(1).toList());
+      String outputFilename =
+          await _generateEnvFileCommand(args.skip(1).toList());
       await _updateMainDartWithEnv(outputFilename);
       await _addToGitignore('.env');
       break;
@@ -55,7 +56,8 @@ void _printUsage() {
 Future<String> _generateEnvFileCommand(List<String> args) async {
   const inputFileName = '.env'; // Default .env file name
   const defaultMainFilePath = 'lib/main.dart'; // Default location of main.dart
-  final defaultOutputFileName = 'env.dart'; // Default file name for generated env.dart
+  final defaultOutputFileName =
+      'env.dart'; // Default file name for generated env.dart
 
   // Determine output folder
   String outputFolderPath;
@@ -94,7 +96,8 @@ Future<String> _generateEnvFileCommand(List<String> args) async {
 ///
 /// - [outputFileName]: The path where the Dart file will be created.
 /// - [envVars]: A `Map<String, String>` containing the parsed environment variables.
-Future<void> _generateEnvFile(String outputFileName, Map<String, String> envVars,
+Future<void> _generateEnvFile(
+    String outputFileName, Map<String, String> envVars,
     {bool addValueOnMapVariables = false}) async {
   final buffer = StringBuffer();
 
@@ -105,7 +108,8 @@ Future<void> _generateEnvFile(String outputFileName, Map<String, String> envVars
   buffer.writeln('import \'package:tarsier_env/tarsier_env.dart\';\n');
   buffer.writeln('/// A class to access environment variables.');
   buffer.writeln('///');
-  buffer.writeln('/// Environment variables are stored in a static map and can be accessed using getters.');
+  buffer.writeln(
+      '/// Environment variables are stored in a static map and can be accessed using getters.');
 
   buffer.writeln('class Env {');
   buffer.writeln('  static Map<String, String> _variables = {};\n');
@@ -155,8 +159,9 @@ Future<void> _createNewEnvFile() async {
   }
 
   // Get the project folder name for `APP_NAME`
-  final projectFolderName =
-      Directory.current.uri.pathSegments.lastWhere((segment) => segment.isNotEmpty, orElse: () => 'unknown_project');
+  final projectFolderName = Directory.current.uri.pathSegments.lastWhere(
+      (segment) => segment.isNotEmpty,
+      orElse: () => 'unknown_project');
 
   // Default content for the `.env` file
   const defaultEnvContent = '''
@@ -195,7 +200,8 @@ PUSHER_APP_KEY=
 PUSHER_APP_SECRET=
 PUSHER_APP_CLUSTER=eu
 ''';
-  final content = defaultEnvContent.replaceFirst('<app name>', projectFolderName);
+  final content =
+      defaultEnvContent.replaceFirst('<app name>', projectFolderName);
 
   // Write the default content to the `.env` file
   await envFile.writeAsString(content);
@@ -275,7 +281,7 @@ Future<void> _updateMainDartWithEnv(String generatedEnvPath) async {
     // Add the import statement for env.dart if not already present
     if (!hasImport && line.startsWith('import ') && !importInserted) {
       buffer.writeln("import '$importPath';");
-      importInserted = true;  // Prevent inserting multiple times
+      importInserted = true; // Prevent inserting multiple times
     }
 
     // Add the line to the buffer
@@ -283,7 +289,8 @@ Future<void> _updateMainDartWithEnv(String generatedEnvPath) async {
 
     // If the main function is found and Env.init() is not present, insert it.
     if (hasMainFunction && !hasEnvInit && line.contains(' main(')) {
-      buffer.writeln('  $envInitCall'); // Add Env.init() inside the main function.
+      buffer.writeln(
+          '  $envInitCall'); // Add Env.init() inside the main function.
       hasEnvInit = true;
     }
   }
@@ -295,7 +302,8 @@ Future<void> _updateMainDartWithEnv(String generatedEnvPath) async {
 
   // If the main function does not exist, log a warning and do not create a new one
   if (!hasMainFunction) {
-    print('Warning: main function not found in $mainFilePath. Skipping Env.init() insertion.');
+    print(
+        'Warning: main function not found in $mainFilePath. Skipping Env.init() insertion.');
   } else {
     // Write back the modified content
     await mainFile.writeAsString(buffer.toString());
@@ -320,5 +328,6 @@ Future<void> _ensureDirectoryExists(String folderPath) async {
 /// - [key]: The key to convert.
 /// Returns a camelCase version of the key.
 String _toCamelCase(String key) {
-  return key.toLowerCase().replaceAllMapped(RegExp(r'(_[a-z])'), (match) => match.group(0)!.substring(1).toUpperCase());
+  return key.toLowerCase().replaceAllMapped(RegExp(r'(_[a-z])'),
+      (match) => match.group(0)!.substring(1).toUpperCase());
 }

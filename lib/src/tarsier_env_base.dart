@@ -55,7 +55,8 @@ Future<Map<String, String>> loadEnvFile(String filePath) async {
       var value = line.substring(separatorIndex + 1).trim();
 
       // Remove surrounding quotes from the value, if present
-      if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+      if ((value.startsWith('"') && value.endsWith('"')) ||
+          (value.startsWith("'") && value.endsWith("'"))) {
         value = value.substring(1, value.length - 1);
       }
 

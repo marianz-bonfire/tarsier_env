@@ -55,7 +55,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [const Text('APP_KEY:'), Text('${Env.vars['APP_KEY']}')],
+                children: [
+                  const Text('APP_KEY:'),
+                  Text('${Env.vars['APP_KEY']}')
+                ],
               ),
             ],
           ),
@@ -64,4 +67,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-

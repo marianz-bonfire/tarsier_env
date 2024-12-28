@@ -39,4 +39,3 @@ class Env {
   static String? get pusherAppSecret => _variables['PUSHER_APP_SECRET'];
   static String? get pusherAppCluster => _variables['PUSHER_APP_CLUSTER'];
 }
-

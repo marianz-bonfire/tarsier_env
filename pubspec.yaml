@@ -1,6 +1,6 @@
 name: tarsier_env
 description: A Dart/Flutter package for loading `.env` files and simplifies the management of environment variables and helps automate the process of accessing them within your project.
-version: 1.0.0
+version: 1.0.2
 homepage: https://github.com/marianz-bonfire/tarsier_env
 repository: https://github.com/marianz-bonfire/tarsier_env
 issue_tracker: https://github.com/marianz-bonfire/tarsier_env/issues
