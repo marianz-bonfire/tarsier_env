@@ -14,7 +14,9 @@ and the Flutter guide for
 [![pub package](https://img.shields.io/pub/v/tarsier_env.svg)](https://pub.dev/packages/tarsier_env)
 [![package publisher](https://img.shields.io/pub/publisher/tarsier_env.svg)](https://pub.dev/packages/tarsier_env/publisher)
 
+<p align="center">
 <img height="280" src="https://raw.githubusercontent.com/marianz-bonfire/tarsier_env/master/assets/logo.png">
+</p>
 
 A Dart/Flutter package for creating/loading `.env` files and generating a Dart file containing environment variables with static getters. This package simplifies the management of environment variables and helps automate the process of accessing them within your project.
 
@@ -34,7 +36,7 @@ Add the following to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  tarsier_env: ^1.0.2
+  tarsier_env: ^1.0.3
 ```
 Then run this command:
 
@@ -47,9 +49,9 @@ flutter pub get
 The `dart run tarsier_env <parameters> <options>` syntax maps directly with required parameters (`generate`, `new`). Options is when you use command `generate` for custom path.
 
 ```
-dart run tarsier new
-dart run tarsier generate
-dart run tarsier generate custom_path_for_env/env.dart
+dart run tarsier_env new
+dart run tarsier_env generate
+dart run tarsier_env generate custom_path_for_env/env.dart
 ```
 
 ### 📒 Usage Example
