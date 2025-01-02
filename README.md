@@ -10,12 +10,40 @@ For general information about developing packages, see the Dart guide for
 and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
-
-[![pub package](https://img.shields.io/pub/v/tarsier_env.svg)](https://pub.dev/packages/tarsier_env)
-[![package publisher](https://img.shields.io/pub/publisher/tarsier_env.svg)](https://pub.dev/packages/tarsier_env/publisher)
+<p align="center">
+  <a href="https://pub.dev/packages/tarsier_env">
+    <img height="260" src="https://raw.githubusercontent.com/marianz-bonfire/tarsier_env/master/assets/logo.png">
+  </a>
+  <h1 align="center">Tarsier ENV</h1>
+</p>
 
 <p align="center">
-<img height="280" src="https://raw.githubusercontent.com/marianz-bonfire/tarsier_env/master/assets/logo.png">
+  <a href="https://pub.dev/packages/tarsier_env">
+    <img src="https://img.shields.io/pub/v/tarsier_env?label=pub.dev&labelColor=333940&logo=dart">
+  </a>
+  <a href="https://pub.dev/packages/tarsier_env/score">
+    <img src="https://img.shields.io/pub/points/tarsier_env?color=2E8B57&label=pub%20points">
+  </a>
+  <a href="https://github.com/marianz-bonfire/tarsier_env/actions/workflows/dart.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/marianz-bonfire/tarsier_env/dart.yml?branch=main&label=tests&labelColor=333940&logo=github">
+  </a>
+  <a href="https://app.codecov.io/gh/marianz-bonfire/tarsier_env">
+    <img src="https://img.shields.io/codecov/c/github/marianz-bonfire/tarsier_env?logo=codecov&logoColor=fff&labelColor=333940&flag=tarsier_env">
+  </a>
+  <a href="https://pub.dev/packages/tarsier_env/publisher">
+    <img src="https://img.shields.io/pub/publisher/tarsier_env.svg">
+  </a>
+  <a href="https://tarsier-marianz.blogspot.com">
+    <img src="https://img.shields.io/static/v1?label=website&message=tarsier-marianz&labelColor=135d34&logo=blogger&logoColor=white&color=fd3a13">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://pub.dev/documentation/tarsier_env/latest/">Documentation</a> •
+  <a href="https://github.com/marianz-bonfire/tarsier_env/issues">Issues</a> •
+  <a href="https://github.com/marianz-bonfire/tarsier_env/tree/master/example">Example</a> •
+  <a href="https://github.com/marianz-bonfire/tarsier_env/blob/master/LICENSE">License</a> •
+  <a href="https://pub.dev/packages/tarsier_env">Pub.dev</a>
 </p>
 
 A Dart/Flutter package for creating/loading `.env` files and generating a Dart file containing environment variables with static getters. This package simplifies the management of environment variables and helps automate the process of accessing them within your project.
@@ -36,7 +64,7 @@ Add the following to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  tarsier_env: ^1.0.3
+  tarsier_env: ^1.0.4
 ```
 Then run this command:
 
