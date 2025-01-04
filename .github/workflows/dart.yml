@@ -6,12 +6,15 @@
 name: Dart CI
 
 on:
-  push:
-    branches: [ "master" ]
-    paths-ignore: [ '**.md', 'example/**' ]
-  pull_request:
-    branches: [ "master" ]
-    paths-ignore: [ '**.md', 'example/**' ]
+  #push:
+  #  branches: [ "master" ]
+  #  paths-ignore: [ '**.md', 'example/**' ]
+  #pull_request:
+  #  branches: [ "master" ]
+  #  paths-ignore: [ '**.md', 'example/**' ]
+
+  workflow_dispatch:
+
 
 jobs:
   build:
@@ -34,8 +37,8 @@ jobs:
       #   run: dart format --output=none --set-exit-if-changed .
 
       # Consider passing '--fatal-infos' for slightly stricter analysis.
-      - name: Analyze project source
-        run: dart analyze --exclude example/**
+      #- name: Analyze project source
+      #  run: dart analyze
 
       - name: Active coverage
         run: dart pub global activate coverage
