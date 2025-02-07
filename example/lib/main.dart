@@ -2,12 +2,12 @@ import 'common/environment/env.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
-  await Env.init(); // Initialize environment variables
+  WidgetsFlutterBinding.ensureInitialized();
+  await Env.init();
 
   String? appName = Env.appName; // You can use the generated static getter
   String? appKey =
       Env.vars['APP_KEY']; // Or you can use the key in the Map<String,String>
-
   runApp(const MyApp());
 }
 
@@ -45,23 +45,65 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final envVars = Env.vars.entries.toList(); // Convert map to list
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Center(
-            child: Container(
-              width: MediaQuery.sizeOf(context).width,
-              color: Colors.amber,
-              padding: const EdgeInsets.all(12.0),
-              child: const Text(
-                  'This is a demo on how to get the value from .env file. Below value is the from APP_KEY'),
+        children: [
+          Container(
+            width: MediaQuery.sizeOf(context).width,
+            color: Colors.amber,
+            padding: const EdgeInsets.all(12.0),
+            child: const Text(
+              'This is a demo on how to get the value from .env file.',
+              textAlign: TextAlign.center,
             ),
           ),
-          Text(Env.appKey ?? '')
+// Centered Container with Text
+          Container(
+            width: MediaQuery.sizeOf(context).width,
+            padding: const EdgeInsets.all(16),
+            decoration: const BoxDecoration(
+              color: Colors.blueAccent,
+            ),
+            child: const Text(
+              "Environment Variables",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+
+// ListView inside Expanded
+          Expanded(
+            child: ListView.builder(
+              itemCount: envVars.length,
+              itemBuilder: (context, index) {
+                final key = envVars[index].key;
+                final value = envVars[index].value;
+
+                return ListTile(
+                  title: Text(
+                    key,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+//subtitle: Text(value),
+                  dense: true,
+                  trailing: Text(
+                    value,
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                  leading: const Icon(Icons.settings),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

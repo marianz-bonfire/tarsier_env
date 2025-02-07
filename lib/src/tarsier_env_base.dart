@@ -70,3 +70,28 @@ Future<Map<String, String>> loadEnvFile(String filePath) async {
 
   return envVars;
 }
+
+// Load .env file from assets for all platforms (mobile, web, desktop)
+Future<Map<String, String>> loadEnvFromAssets() async {
+  try {
+    final content = ''; //await rootBundle.loadString('assets/.env');
+    return parseEnv(content.split('\n'));
+  } catch (e) {
+    print('Error loading .env file from assets: $e');
+    return {};
+  }
+}
+
+// Parse .env file lines into a Map
+Map<String, String> parseEnv(List<String> lines) {
+  final envMap = <String, String>{};
+
+  for (var line in lines) {
+    if (line.trim().isEmpty || line.startsWith('#')) continue;
+    final parts = line.split('=');
+    if (parts.length == 2) {
+      envMap[parts[0].trim()] = parts[1].trim();
+    }
+  }
+  return envMap;
+}

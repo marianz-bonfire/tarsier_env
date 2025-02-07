@@ -64,7 +64,7 @@ Add the following to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  tarsier_env: ^1.0.4
+  tarsier_env: ^1.0.5
 ```
 Then run this command:
 
@@ -79,7 +79,7 @@ The `dart run tarsier_env <parameters> <options>` syntax maps directly with requ
 ```
 dart run tarsier_env new
 dart run tarsier_env generate
-dart run tarsier_env generate custom_path_for_env/env.dart
+dart run tarsier_env generate custom_path_for_env/subpath
 ```
 
 ### 📒 Usage Example
@@ -102,6 +102,8 @@ APP_URL=http://localhost
 
 ...
 ```
+Above defined .ENV file is derived from [Laravel's `.env.example`](https://github.com/laravel/laravel/blob/master/.env.example) file.
+
 The project directory structure will look like this.
 ```sh
 your_project_name/
@@ -120,7 +122,7 @@ dart run tarsier_env generate common/environment
 ```
   - If no path is provided, the generated file will be placed in `lib/env.dart`.
   - If a relative path under the `lib` directory is provided, the file will be placed in the corresponding subfolder.
-
+  - Every time there are changes in `.env` file, it is required to run above command to re-generate the `env.dart` file.
 
 
 This will create `lib/common/environment/env.dart` with the environment. After running above code, you can access the environment variables in your Flutter app.
@@ -130,7 +132,9 @@ class Env {
   static Map<String, String> _variables = {};
 
   static init() async {
-    _variables = await loadEnvFile('.env');
+    //_variables = await loadEnvFile('.env');
+    final content = await rootBundle.loadString('.env');
+    _variables =  parseEnv(content.split('\n'));
   }
 
   static Map<String, String> get vars => _variables;
@@ -146,6 +150,7 @@ import 'package:flutter/material.dart';
 import 'common/environment/env.dart'; // Automatically generated import
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Env.init(); // Initialize environment variables
 
   String appName = Env.appName; // You can use the generated static getter
@@ -168,6 +173,11 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
+## 📸 Example Screenshots
+
+<p align="center">
+  <img height="260" src="https://raw.githubusercontent.com/marianz-bonfire/tarsier_env/master/assets/demo.png">
+</p>
 
 ### 🎖️ License
 This package is licensed under the [MIT License](https://mit-license.org/).
