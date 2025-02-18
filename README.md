@@ -27,12 +27,6 @@ and the Flutter guide for
   <a href="https://github.com/marianz-bonfire/tarsier_env/actions/workflows/dart.yml">
     <img src="https://img.shields.io/github/actions/workflow/status/marianz-bonfire/tarsier_env/dart.yml?branch=main&label=tests&labelColor=333940&logo=github">
   </a>
-  <a href="https://app.codecov.io/gh/marianz-bonfire/tarsier_env">
-    <img src="https://img.shields.io/codecov/c/github/marianz-bonfire/tarsier_env?logo=codecov&logoColor=fff&labelColor=333940&flag=tarsier_env">
-  </a>
-  <a href="https://pub.dev/packages/tarsier_env/publisher">
-    <img src="https://img.shields.io/pub/publisher/tarsier_env.svg">
-  </a>
   <a href="https://tarsier-marianz.blogspot.com">
     <img src="https://img.shields.io/static/v1?label=website&message=tarsier-marianz&labelColor=135d34&logo=blogger&logoColor=white&color=fd3a13">
   </a>
@@ -47,6 +41,9 @@ and the Flutter guide for
 </p>
 
 A Dart/Flutter package for creating/loading `.env` files and generating a Dart file containing environment variables with static getters. This package simplifies the management of environment variables and helps automate the process of accessing them within your project.
+
+This package is a little bit similar to `flutter_dotenv`, but with enhanced functionality, including **static variable name access** and **dynamic value resolution**.
+
 
 ## ✨ Features
 
@@ -64,7 +61,7 @@ Add the following to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  tarsier_env: ^1.0.5
+  tarsier_env: ^1.0.6
 ```
 Then run this command:
 
@@ -132,11 +129,16 @@ class Env {
   static Map<String, String> _variables = {};
 
   static init() async {
-    //_variables = await loadEnvFile('.env');
     final content = await rootBundle.loadString('.env');
-    _variables =  parseEnv(content.split('\n'));
+    _variables =  parseEnv(content);
   }
 
+  static T get<T>(String key, [T? defaultValue]) {
+    final value = _variables[key];
+    if (value == null) return resolvedDefaultValue<T>(defaultValue);
+    return convertType<T>(value) ?? resolvedDefaultValue<T>(defaultValue);
+  }
+  
   static Map<String, String> get vars => _variables;
   static String? get appName => _variables['APP_NAME'];
   static String? get appKey => _variables['APP_KEY'];
@@ -153,8 +155,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Env.init(); // Initialize environment variables
 
-  String appName = Env.appName; // You can use the generated static getter
-  String appKey = Env.vars['APP_KEY']; // Or you can use the key in the Map<String,String>
+  String? appName = Env.appName; // You can directly access generated static variables
+  String? appKey = Env.vars['APP_KEY']; // Or you can use the key in the Map<String,String>
+  String appUrl = Env.get('APP_URL', 'http://localhost'); // Or you can use the get function with default fallback
+
+  // You can call also use "get" function with fallback value
+  int dbPort = Env.get<int>('DB_PORT', 3306);
+  bool appDebug = Env.get<bool>('APP_DEBUG', true);
+  double threshold = Env.get<double>('THRESHOLD', 3.1416);
 
   runApp(MyApp());
 }
@@ -173,6 +181,28 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
+
+## 🪪 Parsing output
+- ✅ Keeps `#` inside values if there’s no space before it
+- ✅ Removes inline comments only when a space exists before `#`
+- ✅ Supports variable referencing (`${VAR_NAME}`)
+- ✅ Handles concatenation (e.g., `"${APP_URL}${APP_PATH}"`)
+- ✅ Ignores undefined variables, replacing with "" Instead
+- ✅ Removes quotes & skips comments Properly 
+
+| Env Entry                                       |   Parse Output                     |
+|-------------------------------------------------|:-----------------------------------|
+| `APP_NAME="Flutter System"`                     |  `Flutter System`                  |
+| `APP_ENV=local`                                 |    `local`                         |
+| `APP_KEY="qwbNB#OzGbS95Q="`                     | `qwbNB#OzGbS95Q=`                  |
+| `APP_SCHEME=http`                               | `http`                             |
+| `APP_DOMAIN=localhost #This is domain name`     | `localhost`                        |
+| `APP_URL="${APP_SCHEME}://${APP_DOMAIN}"`       | `http://localhost`                 |
+| `APP_PATH=/api/v1`                              | `/api/v1`                          |
+| `APP_ENDPOINT="${APP_URL}${APP_PATH}"`          | `http://localhost/api/v1`          |
+
+
+
 ## 📸 Example Screenshots
 
 <p align="center">

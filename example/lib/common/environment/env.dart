@@ -12,9 +12,15 @@ class Env {
   // This function must be called in the main function to
   // initialize first all environment variables
   static init() async {
-    //_variables = await loadEnvFile('.env');
     final content = await rootBundle.loadString('.env');
-    _variables = parseEnv(content.split('\n'));
+    _variables = parseEnv(content);
+  }
+
+  /// Function to get value dynamically
+  static T get<T>(String key, [T? defaultValue]) {
+    final value = _variables[key];
+    if (value == null) return resolvedDefaultValue<T>(defaultValue);
+    return convertType<T>(value) ?? resolvedDefaultValue<T>(defaultValue);
   }
 
   static Map<String, String> get vars => _variables;

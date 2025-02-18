@@ -8,6 +8,14 @@ Future<void> main() async {
   String? appName = Env.appName; // You can use the generated static getter
   String? appKey =
       Env.vars['APP_KEY']; // Or you can use the key in the Map<String,String>
+  String appUrl = Env.get('APP_URL',
+      'http://localhost'); // Or you can use the get function with default fallback
+
+  // You can call also use "get" function with fallback value
+  int dbPort = Env.get<int>('DB_PORT', 3306);
+  bool appDebug = Env.get<bool>('APP_DEBUG', true);
+  double threshold = Env.get<double>('THRESHOLD', 3.1416);
+
   runApp(const MyApp());
 }
 

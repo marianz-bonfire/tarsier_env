@@ -137,11 +137,18 @@ Future<void> _generateEnvFile(
   buffer.writeln('  // This function must be called in the main function to');
   buffer.writeln('  // initialize first all environment variables');
   buffer.writeln('  static init() async {');
-  buffer.writeln('    //_variables = await loadEnvFile(\'.env\');');
+  //buffer.writeln('    //_variables = await loadEnvFile(\'.env\');');
   buffer.writeln("    final content = await rootBundle.loadString('.env');");
-  buffer.writeln("    _variables =  parseEnv(content.split('\\n'));");
+  buffer.writeln("    _variables = parseEnv(content);");
   buffer.writeln('  }\n');
 
+  buffer.writeln('  static T get<T>(String key, [T? defaultValue]) {');
+  buffer.writeln('    final value = _variables[key];');
+  buffer.writeln(
+      '    if (value == null) return resolvedDefaultValue<T>(defaultValue);');
+  buffer.writeln(
+      '    return convertType<T>(value) ?? resolvedDefaultValue<T>(defaultValue);');
+  buffer.writeln('  }');
   buffer.writeln('  static Map<String, String> get vars => _variables;');
   // Generate getters
   envVars.forEach((key, _) {
@@ -187,7 +194,9 @@ APP_NAME="<app name>"
 APP_ENV=local
 APP_KEY=null
 APP_DEBUG=true
-APP_URL=http://localhost
+APP_SCHEME=http
+APP_DOMAIN=localhost
+APP_URL="\${APP_SCHEME}://\${APP_DOMAIN}"
 
 # REDIS configuration
 REDIS_HOST=127.0.0.1

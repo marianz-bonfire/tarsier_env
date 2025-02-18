@@ -1,3 +1,17 @@
+## 1.0.6
+
+* Optimized parsing for better readability.
+* Improved parsing or `.env` content
+    - Keeps `#` inside values if there’s no space before it
+    - Removes inline comments only when a space exists before `#`
+    - Trims surrounding double quotes
+    - Supports variable referencing (`${VAR_NAME}`)
+    - Handles concatenation (e.g., `"${APP_URL}${APP_PATH}"`)
+    - Removes quotes & skips comments properly
++ Added function to get value dynamically for any type while providing a valid default fallback. 
++ Added pubspec topics
++ Modified README file for newly added enhancement
+
 ## 1.0.5
 
 * Enabled package to support global activate

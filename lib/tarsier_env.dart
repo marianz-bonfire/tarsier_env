@@ -1,5 +1,3 @@
-/// Tarsier Environment Library
-///
 /// This library provides tools for loading and managing environment variables
 /// from `.env` files in Dart and Flutter applications. It helps developers
 /// store configuration settings, such as API keys or database credentials,

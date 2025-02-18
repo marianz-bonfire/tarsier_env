@@ -5,6 +5,12 @@ homepage: https://github.com/marianz-bonfire/tarsier_env
 repository: https://github.com/marianz-bonfire/tarsier_env
 issue_tracker: https://github.com/marianz-bonfire/tarsier_env/issues
 
+topics:
+  - tarsier
+  - env
+  - environment
+
+
 # This package supports all platforms listed below.
 platforms:
   android:
